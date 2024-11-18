@@ -143,6 +143,9 @@ void pubOdometry(const Estimator &estimator, const std_msgs::Header &header)
         odometry.twist.twist.linear.x = estimator.Vs[WINDOW_SIZE].x();
         odometry.twist.twist.linear.y = estimator.Vs[WINDOW_SIZE].y();
         odometry.twist.twist.linear.z = estimator.Vs[WINDOW_SIZE].z();
+        // Add covariance
+        for (size_t i=0; i<36; i++)
+            odometry.pose.covariance[i] = estimator.covariance_matrix[i];
         pub_odometry.publish(odometry);
 
         geometry_msgs::PoseStamped pose_stamped;

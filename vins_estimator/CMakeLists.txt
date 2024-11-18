@@ -8,6 +8,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -g")
 
 find_package(catkin REQUIRED COMPONENTS
     roscpp
+    rosbag
     std_msgs
     geometry_msgs
     nav_msgs
@@ -54,4 +55,13 @@ target_link_libraries(vins_lib ${catkin_LIBRARIES} ${OpenCV_LIBS} ${CERES_LIBRAR
 
 
 add_executable(vins_node src/rosNodeTest.cpp)
-target_link_libraries(vins_node vins_lib) 
+target_link_libraries(vins_node vins_lib)
+
+add_executable(vins_from_rosbag src/serialFromRosbag.cpp)
+target_link_libraries(vins_from_rosbag vins_lib)
+
+add_executable(kitti_odom_test src/KITTIOdomTest.cpp)
+target_link_libraries(kitti_odom_test vins_lib)
+
+add_executable(kitti_gps_test src/KITTIGPSTest.cpp)
+target_link_libraries(kitti_gps_test vins_lib)
